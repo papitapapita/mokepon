@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
+    <title>MOKEPON!</title>
+</head>
+
+<body>
+    <h1>MOKEPON!🔥💧🌱</h1>
+
+    <!-- Select pet -->
+    <form id="select-pet">
+        <h2>Elige tu mascota:</h2>
+
+        <select name="" id="">
+            <optgroup label="Water">
+                <option value="hipodoge">Hipodoge 💧</option>
+                <option value="suggles">Suggles 💧</option>
+            </optgroup>
+            <optgroup label="Earth">
+                <option value="capipepo">Capipepo 🌱</option>
+                <option value="todd">Todd 🌱</option>
+            </optgroup>
+            <optgroup label="Fire">
+                <option value="ratigueya">Ratigueya 🔥</option>
+                <option value="kailamor">Kailamor 🔥</option>
+            </optgroup>
+            <optgroup label="Hybrid">
+                <option value="tucapalma">Tucapalma 💧🌱</option>
+                <option value="pydos">Pydos 🌱🔥</option>
+            </optgroup>
+        </select>
+
+        <input type="submit" value="Seleccionar" />
+    </form>
+
+    <!-- Select attack -->
+    <section id="select-attack">
+        <p>Tu mascota tiene <span>3</span> vidas</p>
+        <p>La mascota del enemigo tiene <span>3</span> vidas</p>
+
+        <div>
+            <button>Fuego 🔥</button>
+            <button>Agua 💧</button>
+            <button>Tierra 🌱</button>
+        </div>
+    </section>
+
+    <!-- Result of attack -->
+    <section id="messages">
+        <p></p>
+    </section>
+
+    <!-- Restart match -->
+    <section id="restart"></section>
+
+    <script src="scripts/script.js"></script>
+</body>
+
+</html>
