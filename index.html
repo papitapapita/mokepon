@@ -15,37 +15,37 @@
     <form id="select-pet">
         <h2>Elige tu mascota:</h2>
 
-        <select name="" id="">
+        <select name="pet-selector" id="pet-selector">
             <optgroup label="Water">
-                <option value="hipodoge">Hipodoge 💧</option>
-                <option value="suggles">Suggles 💧</option>
+                <option value="Hipodoge">Hipodoge 💧</option>
+                <option value="Suggles">Suggles 💧</option>
             </optgroup>
             <optgroup label="Earth">
-                <option value="capipepo">Capipepo 🌱</option>
-                <option value="todd">Todd 🌱</option>
+                <option value="Capipepo">Capipepo 🌱</option>
+                <option value="Todd">Todd 🌱</option>
             </optgroup>
             <optgroup label="Fire">
-                <option value="ratigueya">Ratigueya 🔥</option>
-                <option value="kailamor">Kailamor 🔥</option>
+                <option value="Ratigueya">Ratigueya 🔥</option>
+                <option value="Kailamor">Kailamor 🔥</option>
             </optgroup>
             <optgroup label="Hybrid">
-                <option value="tucapalma">Tucapalma 💧🌱</option>
-                <option value="pydos">Pydos 🌱🔥</option>
+                <option value="Tucapalma">Tucapalma 💧🌱</option>
+                <option value="Pydos">Pydos 🌱🔥</option>
             </optgroup>
         </select>
 
-        <input type="submit" value="Seleccionar" />
+        <input type="submit" value="Seleccionar" id="select-btn"/>
     </form>
 
     <!-- Select attack -->
     <section id="select-attack">
-        <p>Tu mascota tiene <span>3</span> vidas</p>
-        <p>La mascota del enemigo tiene <span>3</span> vidas</p>
+        <p>Tu <span id="selected-pet"></span> tiene <span>3</span> vidas</p>
+        <p><span id="enemy-pet"></span> del enemigo tiene <span>3</span> vidas</p>
 
         <div>
-            <button>Fuego 🔥</button>
-            <button>Agua 💧</button>
-            <button>Tierra 🌱</button>
+            <button id="fire-btn">Fuego 🔥</button>
+            <button id="water-btn">Agua 💧</button>
+            <button id="earth-btn">Tierra 🌱</button>
         </div>
     </section>
 
@@ -55,7 +55,9 @@
     </section>
 
     <!-- Restart match -->
-    <section id="restart"></section>
+    <section id="restart">
+        <button id="restart-btn">Reiniciar</button>
+    </section>
 
     <script src="scripts/script.js"></script>
 </body>
