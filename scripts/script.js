@@ -54,6 +54,7 @@ function attackType(e) {
     if (e.target.tagName === 'BUTTON') {
         if (playerPet) {
             playerAttack = attacks.find(attack => attack.name === e.target.value);
+            elements.selectBtn.setAttribute('disabled','true');
             randomEnemyAttack();
             startBattle();
         } else {
@@ -91,6 +92,7 @@ function enableAttackButtons() {
 
 // Handles the battle logic
 function startBattle() {
+    elements.restartMatchBtn.style.display = 'inline-block';
     if (winRules[playerAttack.name] === enemyAttack.name) {
         result = 'Ganas';
         enemyLives--;
@@ -159,6 +161,8 @@ function startGame(){
     elements.matchResultContainer.innerHTML = '';
     render();
     enableAttackButtons();
+    elements.selectBtn.removeAttribute('disabled');
+    elements.restartMatchBtn.style.display = 'none';
 }
 
 // Event listeners
