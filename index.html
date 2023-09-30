@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <title>MOKEPON!</title>
 </head>
@@ -39,19 +42,21 @@
 
     <!-- Select attack -->
     <section id="select-attack">
-        <p>Tu <span id="selected-pet"></span> tiene <span>3</span> vidas</p>
-        <p><span id="enemy-pet"></span> del enemigo tiene <span>3</span> vidas</p>
+        <p id="selected-pet"></p>
+        <p id="enemy-pet"></p>
 
         <div id="buttons-container">
-            <button value="fire" id="fire-btn">Fuego 🔥</button>
-            <button value="water" id="water-btn">Agua 💧</button>
-            <button value="earth" id="earth-btn">Tierra 🌱</button>
+            <button value="fire" class="attack-btn" id="fire-btn">Fuego 🔥</button>
+            <button value="water" class="attack-btn" id="water-btn">Agua 💧</button>
+            <button value="earth" class="attack-btn" id="earth-btn">Tierra 🌱</button>
         </div>
     </section>
 
     <!-- Result of attack -->
     <section id="attack-result">
-        <p></p>
+    </section>
+
+    <section id="match-result">
     </section>
 
     <!-- Restart match -->

@@ -1,4 +1,11 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body{
+    font-family: 'Roboto', sans-serif;
     background-color:azure;
     display: flex;
     flex-direction: column;
@@ -6,4 +13,8 @@ body{
     justify-content: center;
     min-height: 100vh;
     text-align: center;
+}
+
+.attack-btn{
+    display: none;
 }
