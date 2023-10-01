@@ -9,7 +9,10 @@ const elements = {
     attackBtns: document.querySelectorAll(".attack-btn"),
     matchResultContainer: document.querySelector("#match-result"),
     restartMatchBtn: document.querySelector("#restart-btn"),
-    selectAttackContainer: document.querySelector('#select-attack')
+    selectAttackContainer: document.querySelector('#select-attack'),
+    characterImg: document.querySelector('#character-img'),
+    characterTitle: document.querySelector('#character-title'),
+    characterType: document.querySelector('#character-type')
 };
 
 // Variables
@@ -17,26 +20,27 @@ let playerPet, computerPet, playerAttack, enemyAttack, result, playerLives, enem
 
 // Mokepon data
 const mokepons = [
-    { name: 'Hipodoge', type: ['water'] },
-    { name: 'Suggles', type: ['water'] },
-    { name: 'Capipepo', type: ['earth'] },
-    { name: 'Todd', type: ['earth'] },
-    { name: 'Ratigueya', type: ['fire'] },
-    { name: 'Kailamor', type: ['fire'] },
-    { name: 'Tucapalma', type: ['water', 'earth'] },
-    { name: 'Pydos', type: ['earth', 'fire'] },
+    { name: 'Charmander', type: ['fire'], img: 'img/charmander.png' },
+    { name: 'Vulpix', type: ['fire'], img: 'img/vulpix.png' },
+    { name: 'Scovillain', type: ['fire', 'grass'], img: 'img/scovillain.png' },
+    { name: 'Squirtle', type: ['water'], img: 'img/squirtle.png' },
+    { name: 'Psyduck', type: ['water'], img: 'img/psyduck.png' },
+    { name: 'Volcanion', type: ['water', 'fire'], img: 'img/volcanion.png' },
+    { name: 'Bulbasaur', type: ['grass'], img: 'img/bulbasaur.png' },
+    { name: 'Bellsprout', type: ['grass'], img: 'img/bellsprout.png' },
+    { name: 'Lotad', type: ['water', 'grass'], img: 'img/lotad.png' },
 ];
 
 const attacks = [
     { name: 'fire', icon: '🔥' },
     { name: 'water', icon: '💧' },
-    { name: 'earth', icon: '🌱' },
+    { name: 'grass', icon: '🌱' },
 ];
 
 const winRules = {
     'water': 'fire',
-    'earth': 'water',
-    'fire': 'earth',
+    'grass': 'water',
+    'fire': 'grass',
 };
 
 // Event listener for selecting a pet
@@ -150,6 +154,10 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function loadPokemons(){
+    
+}
+
 function startGame(){
     playerLives = 3;
     enemyLives = 3;
@@ -163,6 +171,7 @@ function startGame(){
     enableAttackButtons();
     elements.selectBtn.removeAttribute('disabled');
     elements.restartMatchBtn.style.display = 'none';
+    loadPokemons();
 }
 
 // Event listeners

@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles/styles.css">
     <title>MOKEPON!</title>
 </head>
@@ -18,7 +19,23 @@
     <form id="select-pet">
         <h2>Elige tu mascota:</h2>
 
-        <select name="pet-selector" id="pet-selector">
+        <section class="selecter">
+            <button class="moving-btns" id="left-btn"><i class="fa-solid fa-caret-left"></i></button>
+    
+            <div class="character-container">
+                <figure class="img-container">
+                    <img id="character-img" src="" alt="">
+                    <div>
+                        <h3 id="character-title"></h3>
+                        <p id="chracter-type"></p>
+                    </div>
+                </figure>
+            </div>
+    
+            <button class="moving-btns" id="right-btn"><i class="fa-solid fa-caret-right"></i></button>
+        </section>
+
+        <!-- <select name="pet-selector" id="pet-selector">
             <option value="">Select An Option</option>
             <optgroup label="Water">
                 <option value="Hipodoge">Hipodoge 💧</option>
@@ -36,7 +53,7 @@
                 <option value="Tucapalma">Tucapalma 💧🌱</option>
                 <option value="Pydos">Pydos 🌱🔥</option>
             </optgroup>
-        </select>
+        </select> -->
 
         <input type="submit" value="Seleccionar" id="select-btn"/>
     </form>
