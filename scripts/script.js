@@ -1,7 +1,6 @@
 // Constants for HTML elements
 const elements = {
     selectBtn: document.querySelector('#select-btn'),
-    petSelector: document.querySelector('#pet-selector'),
     selectedPet: document.querySelector('#selected-pet'),
     enemyPet: document.querySelector("#enemy-pet"),
     buttonsContainer: document.querySelector("#buttons-container"),
@@ -12,11 +11,13 @@ const elements = {
     selectAttackContainer: document.querySelector('#select-attack'),
     characterImg: document.querySelector('#character-img'),
     characterTitle: document.querySelector('#character-title'),
-    characterType: document.querySelector('#character-type')
+    characterType: document.querySelector('#character-type'),
+    selectLeftBtn: document.querySelector('#select-left-btn'),
+    selectRightBtn: document.querySelector('#select-right-btn'),
 };
 
 // Variables
-let playerPet, computerPet, playerAttack, enemyAttack, result, playerLives, enemyLives, matchResult;
+let playerPet, computerPet, playerAttack, enemyAttack, result, playerLives, enemyLives, matchResult, pokemonCurrentIndex;
 
 // Mokepon data
 const mokepons = [
@@ -46,7 +47,7 @@ const winRules = {
 // Event listener for selecting a pet
 function selectPet(e) {
     e.preventDefault();
-    playerPet = selectMokeponByName(elements.petSelector.value);
+    playerPet = mokepons[pokemonCurrentIndex] //selectMokeponByName();
     computerPet = selectRandomMokepon();
     render();
     clearAttackResult();
@@ -154,8 +155,10 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function loadPokemons(){
-    
+function loadPokemon(mokeponIndex){
+    elements.characterImg.src = mokepons[mokeponIndex].img;
+    elements.characterTitle.innerText = mokepons[mokeponIndex].name;
+    elements.characterType.innerText = findIcons(mokepons[mokeponIndex]);
 }
 
 function startGame(){
@@ -165,19 +168,33 @@ function startGame(){
     computerPet = '';
     playerAttack = '';
     enemyAttack = '';
+    pokemonCurrentIndex = 0;
     clearAttackResult();
     elements.matchResultContainer.innerHTML = '';
     render();
     enableAttackButtons();
     elements.selectBtn.removeAttribute('disabled');
     elements.restartMatchBtn.style.display = 'none';
-    loadPokemons();
+    loadPokemon(pokemonCurrentIndex);
 }
+
 
 // Event listeners
 elements.selectBtn.addEventListener('click', selectPet);
 elements.buttonsContainer.addEventListener('click', attackType);
 elements.restartMatchBtn.addEventListener('click', startGame);
+elements.selectLeftBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if(pokemonCurrentIndex > 0){
+        loadPokemon(--pokemonCurrentIndex);
+    }
+});
+elements.selectRightBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if(pokemonCurrentIndex < mokepons.length-1){
+        loadPokemon(++pokemonCurrentIndex);
+    }
+});
 
 //Initialization
 startGame();

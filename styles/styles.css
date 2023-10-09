@@ -18,3 +18,7 @@ body{
 .attack-btn {
     display: none;
 }
+
+.selecter{
+    display: flex;
+}
