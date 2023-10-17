@@ -2,6 +2,7 @@
 const elements = {
     selectBtn: document.querySelector('#select-btn'),
     selectedPet: document.querySelector('#selected-pet'),
+    selectPetSection: document.querySelector('#select-pet'),
     enemyPet: document.querySelector("#enemy-pet"),
     buttonsContainer: document.querySelector("#buttons-container"),
     attackResultContainer: document.querySelector("#attack-result"),
@@ -9,8 +10,8 @@ const elements = {
     matchResultContainer: document.querySelector("#match-result"),
     restartMatchBtn: document.querySelector("#restart-btn"),
     selectAttackContainer: document.querySelector('#select-attack'),
-    characterImg: document.querySelector('#character-img'),
-    characterTitle: document.querySelector('#character-title'),
+    characterImg: document.querySelectorAll('.character-img'),
+    characterTitle: document.querySelectorAll('.character-title'),
     characterType: document.querySelector('#character-type'),
     selectLeftBtn: document.querySelector('#select-left-btn'),
     selectRightBtn: document.querySelector('#select-right-btn'),
@@ -47,8 +48,9 @@ const winRules = {
 // Event listener for selecting a pet
 function selectPet(e) {
     e.preventDefault();
-    playerPet = mokepons[pokemonCurrentIndex] //selectMokeponByName();
+    playerPet = mokepons[pokemonCurrentIndex];
     computerPet = selectRandomMokepon();
+    elements.selectPetSection.style.display = 'none';
     render();
     clearAttackResult();
     enableAttackButtons();
@@ -145,19 +147,16 @@ function selectRandomMokepon() {
     return mokepons[getRandomInt(0, mokepons.length - 1)];
 }
 
-// Function to select a Mokepon by name
-function selectMokeponByName(nameToFind) {
-    return mokepons.find(mokepon => mokepon.name === nameToFind);
-}
-
 // Function to get a random integer
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function loadPokemon(mokeponIndex){
-    elements.characterImg.src = mokepons[mokeponIndex].img;
-    elements.characterTitle.innerText = mokepons[mokeponIndex].name;
+    elements.characterImg[0].src = mokepons[mokeponIndex].img;
+    elements.characterImg[1].src = mokepons[mokeponIndex].img;
+    elements.characterTitle[0].innerText = mokepons[mokeponIndex].name;
+    elements.characterTitle[1].innerText = mokepons[mokeponIndex].name;
     elements.characterType.innerText = findIcons(mokepons[mokeponIndex]);
 }
 

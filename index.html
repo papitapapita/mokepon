@@ -24,12 +24,12 @@
     
             <div class="character-container">
                 <figure class="img-container">
-                    <img id="character-img" src="" alt="">
-                    <div>
-                        <h3 id="character-title"></h3>
-                        <p id="character-type"></p>
-                    </div>
+                    <img class="character-img" src="" alt="">
                 </figure>
+                <div>
+                    <h3 class="character-title"></h3>
+                    <p id="character-type"></p>
+                </div>
             </div>
     
             <button class="moving-btns" id="select-right-btn"><i class="fa-solid fa-caret-right"></i></button>
@@ -37,29 +37,45 @@
 
         <input type="submit" value="Seleccionar" id="select-btn"/>
     </form>
+    <section id="battlefield">
+        <!-- Select attack -->
+        <section id="select-attack">
+            <div id="buttons-container">
+                <button value="fire" class="attack-btn" id="fire-btn">Fuego 🔥</button>
+                <button value="water" class="attack-btn" id="water-btn">Agua 💧</button>
+                <button value="earth" class="attack-btn" id="earth-btn">Tierra 🌱</button>
+            </div>
+        </section>
+    
+        <section id="result">
 
-    <!-- Select attack -->
-    <section id="select-attack">
-        <p id="selected-pet"></p>
-        <p id="enemy-pet"></p>
-
-        <div id="buttons-container">
-            <button value="fire" class="attack-btn" id="fire-btn">Fuego 🔥</button>
-            <button value="water" class="attack-btn" id="water-btn">Agua 💧</button>
-            <button value="earth" class="attack-btn" id="earth-btn">Tierra 🌱</button>
-        </div>
-    </section>
-
-    <!-- Result of attack -->
-    <section id="attack-result">
-    </section>
-
-    <section id="match-result">
-    </section>
-
-    <!-- Restart match -->
-    <section id="restart">
-        <button id="restart-btn">Reiniciar</button>
+            <div id="selected-pet">
+                <h3 class="character-title"></h3>
+                <figure class="img-container">
+                    <img class="character-img" src="" alt="">
+                </figure>
+                <p class="player-lives"></p>
+            </div>
+            
+            <div id="enemy-pet">
+                <h3 class="character-title--enemy"></h3>
+                <figure class="img-container">
+                    <img class="character-img--enemy" src="" alt="">
+                </figure>
+                <p class="enemy-lives"></p>
+            </div>
+            <section id="attack-result">
+            </section>
+        
+            <section id="match-result">
+            </section>
+        </section>
+        <!-- Result of attack -->
+    
+        <!-- Restart match -->
+        <section id="restart">
+            <button id="restart-btn">Reiniciar</button>
+        </section>
     </section>
 
     <script src="scripts/script.js"></script>
