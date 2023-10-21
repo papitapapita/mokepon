@@ -24,10 +24,10 @@
     
             <div class="character-container">
                 <figure class="img-container">
-                    <img class="character-img" src="" alt="">
+                    <img id="character-img" src="" alt="">
                 </figure>
                 <div>
-                    <h3 class="character-title"></h3>
+                    <h3 id="character-title"></h3>
                     <p id="character-type"></p>
                 </div>
             </div>
@@ -43,41 +43,48 @@
             <div id="buttons-container">
                 <button value="fire" class="attack-btn" id="fire-btn">Fuego 🔥</button>
                 <button value="water" class="attack-btn" id="water-btn">Agua 💧</button>
-                <button value="earth" class="attack-btn" id="earth-btn">Tierra 🌱</button>
+                <button value="grass" class="attack-btn" id="grass-btn">Tierra 🌱</button>
             </div>
         </section>
-    
+
+        <section id="match-result"></section>
+
         <section id="result">
 
             <div id="selected-pet">
-                <h3 class="character-title"></h3>
-                <figure class="img-container">
-                    <img class="character-img" src="" alt="">
-                </figure>
-                <p class="player-lives"></p>
+                <div class="pet-container">
+                    <h3 id="selected-character-title"></h3>
+                    <figure class="img-container">
+                        <img id="selected-character-img" src="" alt="">
+                    </figure>
+                    <p id="player-lives"></p>
+                </div>
+                <div id="player-attack-result"></div>
             </div>
-            
-            <div id="enemy-pet">
-                <h3 class="character-title--enemy"></h3>
-                <figure class="img-container">
-                    <img class="character-img--enemy" src="" alt="">
-                </figure>
-                <p class="enemy-lives"></p>
-            </div>
-            <section id="attack-result">
-            </section>
-        
-            <section id="match-result">
-            </section>
-        </section>
-        <!-- Result of attack -->
-    
-        <!-- Restart match -->
-        <section id="restart">
-            <button id="restart-btn">Reiniciar</button>
-        </section>
-    </section>
 
+            <div id="enemy-pet">
+                <div class="pet-container">
+                    <h3 id="enemy-character-title"></h3>
+                    <figure class="img-container">
+                        <img id="enemy-character-img" src="" alt="">
+                    </figure>
+                    <p id="enemy-lives"></p>
+                </div>
+                <div id="enemy-attack-result"></div><!-- Por cada ataque, marcar con verde la línea del ganador y rojo la del perdedor  -->
+            </div>
+            <!-- <section id="attack-result">
+            </section>
+            
+            <section id="match-result">
+            </section> -->
+        </section>
+
+        <section id="restart">
+            <button id="restart-btn">Jugar de Nuevo</button>
+        </section>
+        
+    </section>
+    
     <script src="scripts/script.js"></script>
 </body>
 
