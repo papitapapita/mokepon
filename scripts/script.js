@@ -180,7 +180,7 @@ function selectRandomMokepon() {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
+    
 function loadPokemon(mokeponIndex){
     elements.characterImg.src = mokepons[mokeponIndex].img;
     elements.characterTitle.innerText = mokepons[mokeponIndex].name;
@@ -201,7 +201,6 @@ function startGame(){
     elements.selectPetSection.style.display = 'block';
     loadPokemon(pokemonCurrentIndex);
 }
-
 
 // Event listeners
 elements.selectBtn.addEventListener('click', selectPet);
