@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles/styles.css">
     <title>MOKEPON!</title>
+    <script src="scripts/script.js" defer></script>
 </head>
 
 <body>
@@ -21,56 +22,56 @@
 
         <section class="selecter">
             <button class="moving-btns" id="select-left-btn"><i class="fa-solid fa-caret-left"></i></button>
-    
+
             <div class="character-container">
                 <figure class="img-container">
-                    <img id="character-img" src="" alt="">
+                    <img class="character__img" id="character-img">
                 </figure>
-                <div>
-                    <h3 id="character-title"></h3>
-                    <p id="character-type"></p>
+                <div class="character__description">
+                    <h3 class="character__title" id="character-title"></h3>
+                    <p class="character__type" id="character-type"></p>
                 </div>
             </div>
-    
+
             <button class="moving-btns" id="select-right-btn"><i class="fa-solid fa-caret-right"></i></button>
         </section>
 
-        <input type="submit" value="Seleccionar" id="select-btn"/>
+        <input class="selecter__select-btn" type="submit" value="Seleccionar" id="select-btn"/>
     </form>
-    <section id="battlefield">
+    <section class="battlefield" id="battlefield">
         <!-- Select attack -->
-        <section id="select-attack">
-            <div id="buttons-container">
-                <button value="fire" class="attack-btn" id="fire-btn">Fuego 🔥</button>
-                <button value="water" class="attack-btn" id="water-btn">Agua 💧</button>
-                <button value="grass" class="attack-btn" id="grass-btn">Tierra 🌱</button>
+        <section class="battlefield__user-attacks" id="select-attack">
+            <div class="battlefield--user-attackas-container" id="buttons-container">
+                <button value="fire" class="battlefield__attack-btn" id="fire-btn">Fuego 🔥</button>
+                <button value="water" class="battlefield__attack-btn" id="water-btn">Agua 💧</button>
+                <button value="grass" class="battlefield__attack-btn" id="grass-btn">Tierra 🌱</button>
             </div>
         </section>
 
-        <section id="match-result"></section>
+        <section class="match-result" id="match-result"></section>
 
-        <section id="result">
+        <section class="attack-result" id="result">
 
-            <div id="selected-pet">
+            <div class="pet" id="selected-pet">
                 <div class="pet-container">
-                    <h3 id="selected-character-title"></h3>
-                    <figure class="img-container">
-                        <img id="selected-character-img" src="" alt="">
+                    <h3 class="pet__title" id="selected-character-title"></h3>
+                    <figure class="image-container">
+                        <img class="pet__img" id="selected-character-img">
                     </figure>
-                    <p id="player-lives"></p>
+                    <p class="pet__lives" id="player-lives"></p>
                 </div>
-                <div id="player-attack-result"></div>
+                <div class="pet__attack-result" id="player-attack-result"></div>
             </div>
 
-            <div id="enemy-pet">
+            <div class="pet" id="enemy-pet">
                 <div class="pet-container">
-                    <h3 id="enemy-character-title"></h3>
+                    <h3 class="pet__title" id="enemy-character-title"></h3>
                     <figure class="img-container">
-                        <img id="enemy-character-img" src="" alt="">
+                        <img class="pet__img" id="enemy-character-img">
                     </figure>
-                    <p id="enemy-lives"></p>
+                    <p class="pet__lives" id="enemy-lives"></p>
                 </div>
-                <div id="enemy-attack-result"></div><!-- Por cada ataque, marcar con verde la línea del ganador y rojo la del perdedor  -->
+                <div class="pet__attack-result" id="enemy-attack-result"></div><!-- Por cada ataque, marcar con verde la línea del ganador y rojo la del perdedor  -->
             </div>
             <!-- <section id="attack-result">
             </section>
@@ -79,13 +80,12 @@
             </section> -->
         </section>
 
-        <section id="restart">
-            <button id="restart-btn">Jugar de Nuevo</button>
+        <section class="restart" id="restart">
+            <button class="restart__button" id="restart-btn">Jugar de Nuevo</button>
         </section>
         
     </section>
-    
-    <script src="scripts/script.js"></script>
+
 </body>
 
 </html>

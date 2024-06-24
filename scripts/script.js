@@ -5,7 +5,7 @@ const elements = {
     selectPetSection: document.querySelector('#select-pet'),
     enemyPet: document.querySelector("#enemy-pet"),
     buttonsContainer: document.querySelector("#buttons-container"),
-    attackBtns: document.querySelectorAll(".attack-btn"),
+    attackBtns: document.querySelectorAll(".battlefield__attack-btn"),
     matchResultContainer: document.querySelector("#match-result"),
     restartMatchBtn: document.querySelector("#restart-btn"),
     selectAttackContainer: document.querySelector('#select-attack'),
