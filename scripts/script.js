@@ -1,3 +1,12 @@
+class Mokepon{
+    constructor(name, type, img, attacks){
+        this.name = name;
+        this.type = type;
+        this.img = img;
+        this.attacks = attacks;
+    }
+}
+
 // Constants for HTML elements
 const elements = {
     selectBtn: document.querySelector('#select-btn'),
@@ -28,18 +37,17 @@ const elements = {
 // Variables
 let playerPet, computerPet, playerAttack, enemyAttack, playerLives, enemyLives, matchResult, pokemonCurrentIndex, playerIcons, enemyIcons, playerResult, enemyResult;
 
-// Mokepon data
 const mokepons = [
-    { name: 'Charmander', type: ['fire'], img: 'img/charmander.png' },
-    { name: 'Vulpix', type: ['fire'], img: 'img/vulpix.png' },
-    { name: 'Scovillain', type: ['fire', 'grass'], img: 'img/scovillain.png' },
-    { name: 'Squirtle', type: ['water'], img: 'img/squirtle.png' },
-    { name: 'Psyduck', type: ['water'], img: 'img/psyduck.png' },
-    { name: 'Volcanion', type: ['water', 'fire'], img: 'img/volcanion.png' },
-    { name: 'Bulbasaur', type: ['grass'], img: 'img/bulbasaur.png' },
-    { name: 'Bellsprout', type: ['grass'], img: 'img/bellsprout.png' },
-    { name: 'Lotad', type: ['water', 'grass'], img: 'img/lotad.png' },
-];
+    new Mokepon('Charmander', ['fire'],'img/charmander.png', [attacks[0], attacks[0], attacks[0], attacks[1], attacks[2]]),
+    new Mokepon('Vulpix', ['fire'], 'img/vulpix.png', [attacks[0], attacks[0], attacks[1], attacks[1], attacks[2]]),
+    new Mokepon('Scovillain', ['fire', 'grass'], 'img/scovillain.png', [attacks[0], attacks[0], attacks[2], attacks[2], attacks[1]]),
+    new Mokepon('Squirtle', ['water'], 'img/squirtle.png', [attacks[1], attacks[1], attacks[1], attacks[1], attacks[2]]),
+    new Mokepon('Psyduck', ['water'], 'img/psyduck.png', [attacks[1], attacks[1], attacks[0], attacks[2], attacks[2]]),
+    new Mokepon('Volcanion', ['water', 'fire'], 'img/volcanion.png', [attacks[0], attacks[0], attacks[0], attacks[1], attacks[1]]),
+    new Mokepon('Bulbasaur', ['grass'], 'img/bulbasaur.png', [attacks[0], attacks[0], attacks[0], attacks[1], attacks[2]]),
+    new Mokepon('Bellsprout', ['grass'], 'img/bellsprout.png', [attacks[0], attacks[0], attacks[0], attacks[1], attacks[2]]),
+    new Mokepon('Lotad', ['water', 'grass'], 'img/lotad.png', [attacks[0], attacks[0], attacks[0], attacks[1], attacks[2]]),
+]
 
 const attacks = [
     { name: 'fire', icon: '🔥' },

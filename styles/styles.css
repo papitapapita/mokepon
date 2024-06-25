@@ -15,6 +15,15 @@ body{
     text-align: center;
 }
 
+.battlefield{
+    width: 100%;
+}
+
+.battlefield__attack-result{
+    display: flex;
+    justify-content: space-around;
+}
+
 .battlefield__attack-btn {
     display: none;
 }
