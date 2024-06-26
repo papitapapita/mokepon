@@ -37,6 +37,13 @@ const elements = {
 // Variables
 let playerPet, computerPet, playerAttack, enemyAttack, playerLives, enemyLives, matchResult, pokemonCurrentIndex, playerIcons, enemyIcons, playerResult, enemyResult;
 
+
+const attacks = [
+    { name: 'fire', icon: '🔥' },
+    { name: 'water', icon: '💧' },
+    { name: 'grass', icon: '🌱' },
+];
+
 const mokepons = [
     new Mokepon('Charmander', ['fire'],'img/charmander.png', [attacks[0], attacks[0], attacks[0], attacks[1], attacks[2]]),
     new Mokepon('Vulpix', ['fire'], 'img/vulpix.png', [attacks[0], attacks[0], attacks[1], attacks[1], attacks[2]]),
@@ -49,11 +56,6 @@ const mokepons = [
     new Mokepon('Lotad', ['water', 'grass'], 'img/lotad.png', [attacks[0], attacks[0], attacks[0], attacks[1], attacks[2]]),
 ]
 
-const attacks = [
-    { name: 'fire', icon: '🔥' },
-    { name: 'water', icon: '💧' },
-    { name: 'grass', icon: '🌱' },
-];
 
 const winRules = {
     'water': 'fire',
@@ -75,6 +77,19 @@ function selectPet(e) {
     clearAttackResult();
     settleBattle();
     enableAttackButtons();
+}
+
+function renderButtons(mokepon){
+    const buttonsContainer = document.createElement('div');
+    for(const attack of mokepon.attacks){
+        const button = document.createElement('button');
+        //button.setAttribute('value', attack.name);
+        /*button.setAttribute('class', );
+        button.setAttribute('id')*/
+        button.value = attack.name;
+        button.className = 'battlefield__attack-btn';
+        buttonsContainer.appendChild(button);
+    }
 }
 
 function settleBattle(){
