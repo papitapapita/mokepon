@@ -35,7 +35,7 @@ const elements = {
 };
 
 // Variables
-let playerPet, computerPet, playerAttack, enemyAttack, playerLives, enemyLives, matchResult, pokemonCurrentIndex, playerIcons, enemyIcons, playerResult, enemyResult;
+let playerPet, enemyPet, playerAttack, enemyAttack, playerLives, enemyLives, matchResult, currentPokemonIndex, playerIcons, enemyIcons, playerResult, enemyResult;
 
 
 const attacks = [
@@ -72,29 +72,35 @@ const resultColors = {
 // Event listener for selecting a pet
 function selectPet(e) {
     e.preventDefault();
-    playerPet = mokepons[pokemonCurrentIndex];
-    computerPet = selectRandomMokepon();
+    playerPet = mokepons[currentPokemonIndex];
+    enemyPet = selectRandomMokepon();
     clearAttackResult();
     settleBattle();
     enableAttackButtons();
 }
 
-function renderButtons(mokepon){
+function renderButtons(){
     const buttonsContainer = document.createElement('div');
-    for(const attack of mokepon.attacks){
+    buttonsContainer.id = 'buttons-container';
+    buttonsContainer.className = 'battlefield--user-attackas-container';
+    for(const attack of playerPet.attacks){
         const button = document.createElement('button');
         //button.setAttribute('value', attack.name);
         /*button.setAttribute('class', );
         button.setAttribute('id')*/
         button.value = attack.name;
         button.className = 'battlefield__attack-btn';
+        button.innerText = `${attack.name} ${attack.icon}`;
         buttonsContainer.appendChild(button);
     }
+    console.log(buttonsContainer.innerHTML);
+    elements.buttonsContainer.innerHTML = buttonsContainer.innerHTML;
+    //elements.buttonsContainer.addEventListener('click', attackType);
 }
 
 function settleBattle(){
     playerIcons = findIcons(playerPet);
-    enemyIcons = findIcons(computerPet);
+    enemyIcons = findIcons(enemyPet);
     elements.selectPetSection.style.display = 'none';
     renderBattlefield();
 }
@@ -115,9 +121,10 @@ function renderBattlefield(){
     elements.selectedCharacterTitle.innerText = `${playerIcons} ${playerPet.name} ${playerIcons}`;
     elements.selectedCharacterImg.src = mokepons.find(mokepon => mokepon.name === playerPet.name).img;
 
-    elements.enemyCharacterTitle.innerText = `${enemyIcons} ${computerPet.name} ${enemyIcons}`;
-    elements.enemyCharacterImg.src = mokepons.find(mokepon => mokepon.name === computerPet.name).img;
+    elements.enemyCharacterTitle.innerText = `${enemyIcons} ${enemyPet.name} ${enemyIcons}`;
+    elements.enemyCharacterImg.src = mokepons.find(mokepon => mokepon.name === enemyPet.name).img;
 
+    renderButtons();
     renderLives();
 }
 
@@ -139,6 +146,7 @@ function livesCounter(counter){
 
 // Enables attack buttons
 function enableAttackButtons() {
+    elements.attackBtns = document.querySelectorAll('.battlefield__attack-btn');
     elements.attackBtns.forEach(element => {
         element.style.display = playerPet ? 'inline-block' : 'none';
         element.removeAttribute('disabled');
@@ -191,7 +199,7 @@ function findIcons(pet){
 
 // Randomly select an attack
 function randomEnemyAttack() {
-    enemyAttack = attacks[getRandomInt(0, attacks.length - 1)];
+    enemyAttack = enemyPet.attacks[getRandomInt(0, enemyPet.attacks.length - 1)];
 }
 
 // Function to select a random Mokepon
@@ -204,7 +212,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
     
-function loadPokemon(mokeponIndex){
+function renderPokemonToChoose(mokeponIndex){
     elements.characterImg.src = mokepons[mokeponIndex].img;
     elements.characterTitle.innerText = mokepons[mokeponIndex].name;
     elements.characterType.innerText = findIcons(mokepons[mokeponIndex]);
@@ -214,15 +222,15 @@ function startGame(){
     playerLives = 3;
     enemyLives = 3;
     playerPet = '';
-    computerPet = '';
+    enemyPet = '';
     playerAttack = '';
     enemyAttack = '';
-    pokemonCurrentIndex = 0;
+    currentPokemonIndex = 0;
     elements.matchResultContainer.innerHTML = '';
     elements.restartMatchBtn.style.display = 'none';
     elements.battlefieldSection.style.display = 'none';
     elements.selectPetSection.style.display = 'block';
-    loadPokemon(pokemonCurrentIndex);
+    renderPokemonToChoose(currentPokemonIndex);
 }
 
 // Event listeners
@@ -231,14 +239,14 @@ elements.buttonsContainer.addEventListener('click', attackType);
 elements.restartMatchBtn.addEventListener('click', startGame);
 elements.selectLeftBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    if(pokemonCurrentIndex > 0){
-        loadPokemon(--pokemonCurrentIndex);
+    if(currentPokemonIndex > 0){
+        renderPokemonToChoose(--currentPokemonIndex);
     }
 });
 elements.selectRightBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    if(pokemonCurrentIndex < mokepons.length-1){
-        loadPokemon(++pokemonCurrentIndex);
+    if(currentPokemonIndex < mokepons.length-1){
+        renderPokemonToChoose(++currentPokemonIndex);
     }
 });
 

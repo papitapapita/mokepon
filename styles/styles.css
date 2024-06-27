@@ -24,9 +24,9 @@ body{
     justify-content: space-around;
 }
 
-.battlefield__attack-btn {
+/*.battlefield__attack-btn {
     display: none;
-}
+}*/
 
 .selecter{
     display: flex;
