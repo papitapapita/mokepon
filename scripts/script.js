@@ -85,9 +85,6 @@ function renderButtons(){
     buttonsContainer.className = 'battlefield--user-attackas-container';
     for(const attack of playerPet.attacks){
         const button = document.createElement('button');
-        //button.setAttribute('value', attack.name);
-        /*button.setAttribute('class', );
-        button.setAttribute('id')*/
         button.value = attack.name;
         button.className = 'battlefield__attack-btn';
         button.innerText = `${attack.name} ${attack.icon}`;
@@ -95,7 +92,6 @@ function renderButtons(){
     }
     console.log(buttonsContainer.innerHTML);
     elements.buttonsContainer.innerHTML = buttonsContainer.innerHTML;
-    //elements.buttonsContainer.addEventListener('click', attackType);
 }
 
 function settleBattle(){
@@ -194,7 +190,6 @@ function showResult() {
 //Find the type icon for each pet
 function findIcons(pet){
     return pet ? pet.type.map(type => attacks.find(attack => attack.name === type).icon).join('') : '';
-
 }
 
 // Randomly select an attack
