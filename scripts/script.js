@@ -54,14 +54,15 @@ const elements = {
     enemyScore: document.querySelector('#enemy-score'),
     enemyAttackResult: document.querySelector('#enemy-attack-result'),
     playerAttackResult: document.querySelector('#player-attack-result'),
-    battlefieldSection: document.querySelector('#battlefield')
+    battlefieldSection: document.querySelector('#battlefield'),
+    canvasContainer: document.querySelector('.map'),
+    canvas: document.querySelector('#canvas')
 };
 
 // Variables
 let currentPokemonIndex, selectedIcons, player, enemy, round;
 
 const attacks = [
-    
     { name: 'fire', icon: '🔥' },
     { name: 'water', icon: '💧' },
     { name: 'grass', icon: '🌱' },
@@ -114,6 +115,7 @@ function selectPet(e) {
     player.pet = mokepons[currentPokemonIndex];
     enemy.pet = selectRandomMokepon();
     initiateBattlefield();
+    initiateMap(); 
 }
 
 // Function to select a random Mokepon
@@ -124,6 +126,23 @@ function selectRandomMokepon() {
 // Function to get a random integer
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// ------------------------------------//
+// ---------------- MAP ---------------//
+// ------------------------------------//
+
+function initiateMap(){
+    debugger
+    elements.canvasContainer.style.display = 'block';
+    let canvasContext = elements.canvas.getContext("2d");
+    let imageToLoad = new Image();
+    imageToLoad.src = player.pet.img;
+    canvasContext.drawImage(imageToLoad, 10, 10, 100, 100);
+}
+
+function movePet(){
+    
 }
 
 // ------------------------------------//
@@ -202,7 +221,6 @@ function renderLives(){
 
 // Event listener for selecting an attack type
 function attackType(e) {
-    debugger
     e.preventDefault()
     if (e.target.tagName === 'BUTTON') {
         player.attack = player.pet.attacks.find(attack => attack.id == e.target.value);
@@ -305,7 +323,6 @@ function randomEnemyAttack() {
 // ------------------------------------//
 
 function startGame(){
-    debugger;
     player = new GameCharacter();
     enemy = new GameCharacter();
     currentPokemonIndex = 0;
@@ -314,26 +331,25 @@ function startGame(){
     elements.buttonsContainer.innerHTML = '';
     elements.restartMatchBtn.style.display = 'none';
     elements.battlefieldSection.style.display = 'none';
+    elements.canvasContainer.style.display = 'none';
     elements.selectPetSection.style.display = 'block';
+    elements.selection
 
     renderPokemonToChoose(currentPokemonIndex);
 }
 
 elements.selectBtn.addEventListener('click', (e) => {
-    debugger
     selectPet(e, currentPokemonIndex);
 });
 elements.buttonsContainer.addEventListener('click', attackType);
 elements.restartMatchBtn.addEventListener('click', startGame);
 elements.selectLeftBtn.addEventListener('click', (e) => {
-    debugger
     e.preventDefault();
     if(currentPokemonIndex > 0){
         renderPokemonToChoose(--currentPokemonIndex);
     }
 });
 elements.selectRightBtn.addEventListener('click', (e) => {
-    debugger
     e.preventDefault();
     if(currentPokemonIndex < mokepons.length-1){
         renderPokemonToChoose(++currentPokemonIndex);
