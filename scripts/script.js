@@ -75,7 +75,7 @@ const elements = {
 };
 
 // Variables
-let currentPokemonIndex, selectedIcons, player, enemy, round;
+let currentPokemonIndex, selectedIcons, player, enemies, round;
 let map = new Image();
 map.src = 'img/mokemap.jpg';
 
@@ -137,9 +137,9 @@ function findIcons(pet){
 function selectPet(e) {
     e.preventDefault();
     player.pet = mokepons[currentPokemonIndex];
-    enemy.pet = selectRandomMokepon();
-    initiateBattlefield();
+    enemies.forEach(enemy => enemy.pet = selectRandomMokepon());
     initiateMap(); 
+    //initiateBattlefield();
 }
 
 // Function to select a random Mokepon
@@ -158,8 +158,10 @@ function getRandomInt(min, max) {
 
 function initiateMap(){
     elements.canvasContainer.style.display = 'block';
-    enemy.petPosition.x = getRandomInt(5, elements.canvas.width - 5);
-    enemy.petPosition.y =  getRandomInt(5, elements.canvas.height - 5);
+    enemies.forEach(enemy => {
+        enemy.petPosition.x = getRandomInt(80, elements.canvas.width - 80);
+        enemy.petPosition.y =  getRandomInt(80, elements.canvas.height - 80);
+    })
     drawPets();
 }
 
@@ -193,7 +195,8 @@ function updateCanvas(){
 function drawPets(){
     elements.canvasContext.drawImage(map, 0, 0, elements.canvas.width, elements.canvas.height);
     player.drawPet();
-    enemy.drawPet();
+    enemies.forEach(enemy => enemy.drawPet());
+    
 }
 
 // ------------------------------------//
@@ -354,7 +357,7 @@ function randomEnemyAttack() {
 
 function startGame(){
     player = new GameCharacter();
-    enemy = new GameCharacter();
+    enemies = [new GameCharacter(), new GameCharacter(), new GameCharacter()];
     currentPokemonIndex = 0;
 
     elements.matchResultContainer.innerHTML = '';
