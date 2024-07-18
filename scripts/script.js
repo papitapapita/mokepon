@@ -70,6 +70,9 @@ const elements = {
 
 // Variables
 let currentPokemonIndex, selectedIcons, player, enemy, round;
+let map = new Image();
+map.src = 'img/mokemap.jpg';
+
 let keysPressed = {
     'ArrowUp': false,
     'ArrowDown': false,
@@ -153,7 +156,9 @@ function initiateMap(){
 }
 
 function drawPet(){
+    
     console.log(elements.canvasContext)
+    elements.canvasContext.drawImage(map, 0, 0, elements.canvas.width, elements.canvas.height);
     elements.canvasContext.drawImage(player.pet.image, player.petPosition.x, player.petPosition.y, player.petPosition.width, player.petPosition.height);
 }
 
@@ -395,14 +400,14 @@ elements.selectRightBtn.addEventListener('click', (e) => {
     }
 });
 document.addEventListener('keydown', event => {
-    debugger
+    
     if(Object.keys(keysPressed).includes(event.key)){
         keysPressed[event.key] = true;
         moveCharacter();
     }
 });
 document.addEventListener('keyup', event => {
-    debugger
+    
     if(Object.keys(keysPressed).includes(event.key)){
         keysPressed[event.key] = false;
     }
