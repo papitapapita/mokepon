@@ -36,6 +36,12 @@ class GameCharacter{
             speed: 5
         };
     }
+
+    drawPet(){
+        console.log(elements.canvasContext)
+        
+        elements.canvasContext.drawImage(this.pet.image,this.petPosition.x, this.petPosition.y, this.petPosition.width, this.petPosition.height);
+    }
 }
 
 // Constants for HTML elements
@@ -152,14 +158,9 @@ function getRandomInt(min, max) {
 
 function initiateMap(){
     elements.canvasContainer.style.display = 'block';
-    drawPet();
-}
-
-function drawPet(){
-    
-    console.log(elements.canvasContext)
-    elements.canvasContext.drawImage(map, 0, 0, elements.canvas.width, elements.canvas.height);
-    elements.canvasContext.drawImage(player.pet.image, player.petPosition.x, player.petPosition.y, player.petPosition.width, player.petPosition.height);
+    enemy.petPosition.x = getRandomInt(5, elements.canvas.width - 5);
+    enemy.petPosition.y =  getRandomInt(5, elements.canvas.height - 5);
+    drawPets();
 }
 
 function clearCanvas(){
@@ -186,7 +187,13 @@ function moveCharacter(){
 
 function updateCanvas(){
     clearCanvas();
-    drawPet();
+    drawPets();
+}
+
+function drawPets(){
+    elements.canvasContext.drawImage(map, 0, 0, elements.canvas.width, elements.canvas.height);
+    player.drawPet();
+    enemy.drawPet();
 }
 
 // ------------------------------------//
@@ -226,11 +233,9 @@ function enableAttackButtons() {
 function renderBattlefield(){
     elements.battlefieldSection.style.display = 'block'
     elements.selectedCharacterTitle.innerText = `${player.icons} ${player.pet.name} ${player.icons}`;
-    //elements.selectedCharacterImg.src = mokepons.find(mokepon => mokepon.name === player.pet.name).img;
     elements.selectedCharacterImg.src = player.pet.image.src;
 
     elements.enemyCharacterTitle.innerText = `${enemy.icons} ${enemy.pet.name} ${enemy.icons}`;
-    //elements.enemyCharacterImg.src = mokepons.find(mokepon => mokepon.name === enemy.pet.name).img;
     elements.enemyCharacterImg.src = enemy.pet.image.src;
 
     renderButtons();
@@ -251,18 +256,6 @@ function renderButtons(){
     elements.buttonsContainer.innerHTML = buttonsContainer.innerHTML;
 }
 
-/*
-function renderLives(){
-    elements.playerLives.innerText = renderScore(player.lives);
-    elements.enemyLives.innerText = renderScore(enemy.lives);
-}*/
-
-//Counts lives with heart emojis
-/*function livesCounter(counter){
-    return '❤️'.repeat(counter);
-}*/
-
-
 // Event listener for selecting an attack type
 function attackType(e) {
     e.preventDefault()
@@ -280,7 +273,6 @@ function startBattle() {
         player.result = 'green';
         enemy.result = 'red'
         player.score++;
-        //enemy.lives--;
     } else if (player.attack.name === enemy.attack.name) {
         player.result = 'grey';
         enemy.result = 'grey'
@@ -288,11 +280,9 @@ function startBattle() {
         player.result = 'red';
         enemy.result = 'green'
         enemy.score++;
-        //player.lives--;
     }
 
     showResult();
-    //renderLives();
     disableUsedAttack(player);
     disableUsedAttack(enemy);
     evaluateResult();
@@ -330,10 +320,6 @@ function evaluateResult(){
         return;
     }
     round++;
-}
-
-function enableAttacks(gameCharacter){
-
 }
 
 function renderScore(){
@@ -400,7 +386,7 @@ elements.selectRightBtn.addEventListener('click', (e) => {
     }
 });
 document.addEventListener('keydown', event => {
-    
+    //debugger
     if(Object.keys(keysPressed).includes(event.key)){
         keysPressed[event.key] = true;
         moveCharacter();
@@ -412,7 +398,6 @@ document.addEventListener('keyup', event => {
         keysPressed[event.key] = false;
     }
 })
-
 
 //Initialization
 startGame();
