@@ -2,10 +2,11 @@
 // GLOBALS
 
 class Mokepon{
-    constructor(name, type, img, attacks){
+    constructor(name, type, imgSrc, attacks){
         this.name = name;
         this.type = type;
-        this.img = img;
+        this.image = new Image();
+        this.image.src = imgSrc; 
         this.attacks = attacks;
     }
 }
@@ -27,6 +28,13 @@ class GameCharacter{
         this.score = 0;
         this.icons = icons;
         this.result = result;
+        this.petPosition = {
+            x: 20,
+            y: 30,
+            height: 80,
+            width: 80,
+            speed: 5
+        };
     }
 }
 
@@ -56,11 +64,18 @@ const elements = {
     playerAttackResult: document.querySelector('#player-attack-result'),
     battlefieldSection: document.querySelector('#battlefield'),
     canvasContainer: document.querySelector('.map'),
-    canvas: document.querySelector('#canvas')
+    canvas: document.querySelector('#canvas'),
+    canvasContext: canvas.getContext('2d')
 };
 
 // Variables
 let currentPokemonIndex, selectedIcons, player, enemy, round;
+let keysPressed = {
+    'ArrowUp': false,
+    'ArrowDown': false,
+    'ArrowLeft': false,
+    'ArrowRight': false
+};
 
 const attacks = [
     { name: 'fire', icon: '🔥' },
@@ -98,7 +113,7 @@ const resultColors = {
 //-----------------------------------//
 
 function renderPokemonToChoose(mokeponIndex){
-    elements.characterImg.src = mokepons[mokeponIndex].img;
+    elements.characterImg.src = mokepons[mokeponIndex].image.src;
     elements.characterTitle.innerText = mokepons[mokeponIndex].name;
     selectedIcons =  findIcons(mokepons[mokeponIndex]);
     elements.characterType.innerText = selectedIcons;
@@ -133,16 +148,40 @@ function getRandomInt(min, max) {
 // ------------------------------------//
 
 function initiateMap(){
-    debugger
     elements.canvasContainer.style.display = 'block';
-    let canvasContext = elements.canvas.getContext("2d");
-    let imageToLoad = new Image();
-    imageToLoad.src = player.pet.img;
-    canvasContext.drawImage(imageToLoad, 10, 10, 100, 100);
+    drawPet();
 }
 
-function movePet(){
+function drawPet(){
+    console.log(elements.canvasContext)
+    elements.canvasContext.drawImage(player.pet.image, player.petPosition.x, player.petPosition.y, player.petPosition.width, player.petPosition.height);
+}
+
+function clearCanvas(){
+    elements.canvasContext.clearRect(0, 0, elements.canvas.width, elements.canvas.height);
+}
+
+function moveCharacter(){
+    //debugger
+    if(keysPressed.ArrowUp && player.petPosition.y > 5){
+        player.petPosition.y -= player.petPosition.speed;
+    }
+    if(keysPressed.ArrowDown && player.petPosition.y < (elements.canvas.height - player.petPosition.height - 5)){
+        player.petPosition.y += player.petPosition.speed;
+    }
+    if(keysPressed.ArrowLeft && player.petPosition.x > 5){
+        player.petPosition.x -= player.petPosition.speed;
+    }
+    if(keysPressed.ArrowRight && player.petPosition.x < (elements.canvas.width - player.petPosition.width - 5)){
+        player.petPosition.x += player.petPosition.speed;
+    }
     
+    updateCanvas();
+}
+
+function updateCanvas(){
+    clearCanvas();
+    drawPet();
 }
 
 // ------------------------------------//
@@ -183,11 +222,11 @@ function renderBattlefield(){
     elements.battlefieldSection.style.display = 'block'
     elements.selectedCharacterTitle.innerText = `${player.icons} ${player.pet.name} ${player.icons}`;
     //elements.selectedCharacterImg.src = mokepons.find(mokepon => mokepon.name === player.pet.name).img;
-    elements.selectedCharacterImg.src = player.pet.img;
+    elements.selectedCharacterImg.src = player.pet.image.src;
 
     elements.enemyCharacterTitle.innerText = `${enemy.icons} ${enemy.pet.name} ${enemy.icons}`;
     //elements.enemyCharacterImg.src = mokepons.find(mokepon => mokepon.name === enemy.pet.name).img;
-    elements.enemyCharacterImg.src = enemy.pet.img;
+    elements.enemyCharacterImg.src = enemy.pet.image.src;
 
     renderButtons();
     renderScore();
@@ -355,6 +394,19 @@ elements.selectRightBtn.addEventListener('click', (e) => {
         renderPokemonToChoose(++currentPokemonIndex);
     }
 });
+document.addEventListener('keydown', event => {
+    debugger
+    if(Object.keys(keysPressed).includes(event.key)){
+        keysPressed[event.key] = true;
+        moveCharacter();
+    }
+});
+document.addEventListener('keyup', event => {
+    debugger
+    if(Object.keys(keysPressed).includes(event.key)){
+        keysPressed[event.key] = false;
+    }
+})
 
 
 //Initialization
