@@ -2,6 +2,7 @@ class GameCharacter{
     constructor(id, pet){
         this.id = id;
         this.pet = pet;
+        this.position = position;
     }
 }
 
@@ -32,13 +33,26 @@ app.get("/players", (req, res) => {
 })
 
 app.post("/mokepon/:playerId", (req, res) => {
-    const playerId = req.params.playerId;
-    const mokeponData = req.body.mokepon;
+    const playerId = req.params.playerId || "";
+    const mokeponData = req.body.mokepon || "";
     //const mokepon = new Mokepon(mokeponData.name);
     const playerIndex = playersList.findIndex(player => player.id == playerId);
-    playersList[playerIndex].pet = mokeponData;
+    if(playerIndex >= 0){
+        playersList[playerIndex].pet = mokeponData;
+    }
     res.end();
-})
+});
+
+app.post("/mokepon/:playerId/position", (req, res) => {
+    const playerId = req.params.playerId || "";
+    const playerIndex = playersList.findIndex(player => player.id == playerId);
+    if(playerIndex >= 0){
+        const position = {x: req.params.x, y: req.params.y} || {};
+        playersList[playerIndex].position = position;
+    }
+    res.end();
+});
+
 
 app.listen(5002, () => {
     console.log('Server Working');

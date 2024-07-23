@@ -89,6 +89,8 @@ const elements = {
 // Variables
 let currentPokemonIndex, selectedIcons, player, enemies, round, selectedEnemy;
 let map = new Image();
+let portServer = 5002;
+let addressServer = 'http://localhost';
 map.src = 'img/mokemap.jpg';
 
 let keysPressed = {
@@ -151,12 +153,12 @@ function selectPet(e) {
     player.pet = mokepons[currentPokemonIndex];
     enemies.forEach(enemy => enemy.pet = selectRandomMokepon());
     elements.selectPetSection.style.display = 'none';
-    updateServer();
+    updateServerPet();
     initiateMap();
 }
 
-async function updateServer(){
-    const response = await fetch(`http://localhost:5002/mokepon/${player.id}`, {
+async function updateServerPet(){
+    const response = await fetch(`${addressServer}:${portServer}/mokepon/${player.id}`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -219,8 +221,20 @@ function moveCharacter(){
         }
     });
     
-
+    updateServerPosition();
     updateCanvas();
+}
+
+async function updateServerPosition(x, y){
+    const response = await fetch(`${addressServer}:${portServer}/mokepon/${player.id}/position`, {
+        method: 'post',
+        headers: {
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify({
+            x,y
+        })
+    });
 }
 
 function updateCanvas(){
@@ -430,7 +444,7 @@ function startGame(){
 
 async function joinGame(){
     try{
-        const response = await fetch('http://localhost:5002/join');
+        const response = await fetch(`${addressServer}:${portServer}/join`);
         if(response.ok){
             const data = await response.json();
             player.id = data;
