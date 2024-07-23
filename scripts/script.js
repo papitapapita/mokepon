@@ -23,6 +23,7 @@ class Attack{
 
 class GameCharacter{
     constructor(pet, attack, icons, result){
+        this.id = 0;
         this.pet = pet;
         this.attack = attack;
         this.score = 0;
@@ -150,7 +151,21 @@ function selectPet(e) {
     player.pet = mokepons[currentPokemonIndex];
     enemies.forEach(enemy => enemy.pet = selectRandomMokepon());
     elements.selectPetSection.style.display = 'none';
+    updateServer();
     initiateMap();
+}
+
+async function updateServer(){
+    const response = await fetch(`http://localhost:5002/mokepon/${player.id}`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            mokepon: player.pet
+        })
+    });
+    console.log(response.status);
 }
 
 // Function to select a random Mokepon
@@ -396,9 +411,9 @@ function randomEnemyAttack() {
 // ------------------------------------//
 
 function startGame(){
-    joinGame();
     player = new GameCharacter();
     enemies = [new GameCharacter(), new GameCharacter(), new GameCharacter()];
+    joinGame();
     currentPokemonIndex = 0;
 
     elements.matchResultContainer.innerHTML = '';
@@ -418,7 +433,8 @@ async function joinGame(){
         const response = await fetch('http://localhost:5002/join');
         if(response.ok){
             const data = await response.json();
-            console.log(data);
+            player.id = data;
+            console.log(player.id);
         }else{
             throw Error("Status " + response.status);
         }
