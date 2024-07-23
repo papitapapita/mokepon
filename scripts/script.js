@@ -396,6 +396,7 @@ function randomEnemyAttack() {
 // ------------------------------------//
 
 function startGame(){
+    joinGame();
     player = new GameCharacter();
     enemies = [new GameCharacter(), new GameCharacter(), new GameCharacter()];
     currentPokemonIndex = 0;
@@ -410,6 +411,20 @@ function startGame(){
     document.addEventListener('keydown', keyDownEvent);
 
     renderPokemonToChoose(currentPokemonIndex);
+}
+
+async function joinGame(){
+    try{
+        const response = await fetch('http://localhost:5002/join');
+        if(response.ok){
+            const data = await response.json();
+            console.log(data);
+        }else{
+            throw Error("Status " + response.status);
+        }
+    }catch(err){
+        console.error('There was something wrong: ' + err);
+    }
 }
 
 elements.selectBtn.addEventListener('click', (e) => {
