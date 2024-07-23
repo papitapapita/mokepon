@@ -44,7 +44,6 @@ class GameCharacter{
     }
 
     drawPet(){
-        console.log(elements.canvasContext)
         elements.canvasContext.drawImage(this.pet.image,this.petPosition.x, this.petPosition.y, this.petPosition.width, this.petPosition.height);
     }
 
@@ -87,7 +86,7 @@ const elements = {
 };
 
 // Variables
-let currentPokemonIndex, selectedIcons, player, enemies, round;
+let currentPokemonIndex, selectedIcons, player, enemies, round, selectedEnemy;
 let map = new Image();
 map.src = 'img/mokemap.jpg';
 
@@ -150,8 +149,8 @@ function selectPet(e) {
     e.preventDefault();
     player.pet = mokepons[currentPokemonIndex];
     enemies.forEach(enemy => enemy.pet = selectRandomMokepon());
-    initiateMap(); 
-    //initiateBattlefield();
+    elements.selectPetSection.style.display = 'none';
+    initiateMap();
 }
 
 // Function to select a random Mokepon
@@ -169,6 +168,7 @@ function getRandomInt(min, max) {
 // ------------------------------------//
 
 function initiateMap(){
+    
     elements.canvasContainer.style.display = 'block';
     enemies.forEach(enemy => {
         enemy.petPosition.x = getRandomInt(80, elements.canvas.width - 80);
@@ -197,12 +197,13 @@ function moveCharacter(){
     }
 
     enemies.forEach(enemy => {
-        console.log(checkCollision(enemy))
         if (checkCollision(enemy)) {
             selectedEnemy = enemy;
             initiateBattlefield();
+            return;   
         }
     });
+    
 
     updateCanvas();
 }
@@ -220,25 +221,22 @@ function drawPets(){
 }
 
 function checkCollision(enemy){
-    debugger
     player.setLimits();
     enemy.setLimits()
-    console.log('Player bottom ' + player.limits.bottom);
-    console.log('Player top ' + player.limits.top);
-    console.log('Player right ' + player.limits.right);
-    console.log('Player left ' + player.limits.left);
-    console.log('Enemy bottom ' + player.limits.bottom);
-    console.log('Enemy top ' + player.limits.top);
-    console.log('Enemy right ' + player.limits.right);
-    console.log('Enemy left ' + player.limits.left);
     if (player.limits.bottom < enemy.limits.top ||
         player.limits.top > enemy.limits.bottom ||
         player.limits.right < enemy.limits.left ||
         player.limits.left > enemy.limits.right ) {
             return false;
     }
+    stopMovement();
     alert(`Colission with ${enemy.pet.name}`);
     return true;
+}
+
+function stopMovement(){
+    document.removeEventListener('keydown', keyDownEvent);
+    document.removeEventListener('keyup', keyUpEvent);
 }
 
 // ------------------------------------//
@@ -247,6 +245,7 @@ function checkCollision(enemy){
 
 
 function initiateBattlefield(){
+    debugger;
     clearAttackResult();
     settleBattle();
     round = 1;
@@ -259,8 +258,7 @@ function clearAttackResult() {
 
 function settleBattle(){
     player.icons = selectedIcons;
-    enemy.icons = findIcons(enemy.pet);
-    elements.selectPetSection.style.display = 'none';
+    selectedEnemy.icons = findIcons(selectedEnemy.pet);
     renderBattlefield();
 }
 
@@ -275,12 +273,13 @@ function enableAttackButtons() {
 
 //Render the UI elements
 function renderBattlefield(){
-    elements.battlefieldSection.style.display = 'block'
+    //elements.canvas.style.display = 'none';
+    elements.battlefieldSection.style.display = 'block';
     elements.selectedCharacterTitle.innerText = `${player.icons} ${player.pet.name} ${player.icons}`;
     elements.selectedCharacterImg.src = player.pet.image.src;
 
-    elements.enemyCharacterTitle.innerText = `${enemy.icons} ${enemy.pet.name} ${enemy.icons}`;
-    elements.enemyCharacterImg.src = enemy.pet.image.src;
+    elements.enemyCharacterTitle.innerText = `${selectedEnemy.icons} ${selectedEnemy.pet.name} ${selectedEnemy.icons}`;
+    elements.enemyCharacterImg.src = selectedEnemy.pet.image.src;
 
     renderButtons();
     renderScore();
@@ -313,22 +312,22 @@ function attackType(e) {
 
 // Handles the battle logic
 function startBattle() {
-    if (winRules[player.attack.name] === enemy.attack.name) {
+    if (winRules[player.attack.name] === selectedEnemy.attack.name) {
         player.result = 'green';
-        enemy.result = 'red'
+        selectedEnemy.result = 'red'
         player.score++;
-    } else if (player.attack.name === enemy.attack.name) {
+    } else if (player.attack.name === selectedEnemy.attack.name) {
         player.result = 'grey';
-        enemy.result = 'grey'
+        selectedEnemy.result = 'grey'
     } else {
         player.result = 'red';
-        enemy.result = 'green'
-        enemy.score++;
+        selectedEnemy.result = 'green'
+        selectedEnemy.score++;
     }
 
     showResult();
     disableUsedAttack(player);
-    disableUsedAttack(enemy);
+    disableUsedAttack(selectedEnemy);
     evaluateResult();
     
 }
@@ -350,11 +349,11 @@ function disableUsedAttack(gameCharacter){
 }
 
 function evaluateResult(){
-    if(enemy.score === 3 || player.score === 3 || round === 5){
+    if(selectedEnemy.score === 3 || player.score === 3 || round === 5){
         let matchResult = "";
-        if(enemy.score > player.score){
+        if(selectedEnemy.score > player.score){
             matchResult = 'Perdiste la batalla!';
-        }else if(enemy.score < player.score){
+        }else if(selectedEnemy.score < player.score){
             matchResult = 'Ganaste la batalla!';
         }else{
             matchResult = 'Empate!';
@@ -368,7 +367,7 @@ function evaluateResult(){
 
 function renderScore(){
     elements.playerScore.innerText = player.score;
-    elements.enemyScore.innerText = enemy.score;
+    elements.enemyScore.innerText = selectedEnemy.score;
 }
 
 // Displays the battle result
@@ -376,9 +375,9 @@ function showResult() {
     let playerAttackContainer = document.createElement('p');
     let enemyAttackContainer = document.createElement('p');
     playerAttackContainer.innerText = `${player.attack.name} ${player.attack.icon}`;
-    enemyAttackContainer.innerText = `${enemy.attack.name} ${enemy.attack.icon}`;
+    enemyAttackContainer.innerText = `${selectedEnemy.attack.name} ${selectedEnemy.attack.icon}`;
     playerAttackContainer.style.backgroundColor = resultColors[player.result];
-    enemyAttackContainer.style.backgroundColor = resultColors[enemy.result];
+    enemyAttackContainer.style.backgroundColor = resultColors[selectedEnemy.result];
     elements.enemyAttackResult.appendChild(enemyAttackContainer);
     elements.playerAttackResult.appendChild(playerAttackContainer);
     renderScore();
@@ -387,8 +386,8 @@ function showResult() {
 // Randomly select an attack
 function randomEnemyAttack() {
     do{
-        enemy.attack = enemy.pet.attacks[getRandomInt(0, enemy.pet.attacks.length - 1)];
-    }while(!enemy.attack.available)
+        selectedEnemy.attack = selectedEnemy.pet.attacks[getRandomInt(0, selectedEnemy.pet.attacks.length - 1)];
+    }while(!selectedEnemy.attack.available)
 }
 
 
@@ -407,7 +406,8 @@ function startGame(){
     elements.battlefieldSection.style.display = 'none';
     elements.canvasContainer.style.display = 'none';
     elements.selectPetSection.style.display = 'block';
-    elements.selection
+    document.addEventListener('keyup', keyUpEvent);
+    document.addEventListener('keydown', keyDownEvent);
 
     renderPokemonToChoose(currentPokemonIndex);
 }
@@ -429,19 +429,22 @@ elements.selectRightBtn.addEventListener('click', (e) => {
         renderPokemonToChoose(++currentPokemonIndex);
     }
 });
-document.addEventListener('keydown', event => {
-    //debugger
+
+
+function keyDownEvent(event){
     if(Object.keys(keysPressed).includes(event.key)){
         keysPressed[event.key] = true;
         moveCharacter();
     }
-});
-document.addEventListener('keyup', event => {
-    
+}
+
+
+
+function keyUpEvent(event){
     if(Object.keys(keysPressed).includes(event.key)){
         keysPressed[event.key] = false;
     }
-})
+}
 
 //Initialization
 startGame();
