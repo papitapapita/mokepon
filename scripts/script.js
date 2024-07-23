@@ -33,14 +33,26 @@ class GameCharacter{
             y: 30,
             height: 80,
             width: 80,
-            speed: 5
+            speed: 5,
         };
+        this.limits = {
+            top: this.petPosition.y,
+            bottom: this.petPosition.y + this.petPosition.height,
+            right: this.petPosition.x + this.petPosition.width,
+            left: this.petPosition.x
+        }
     }
 
     drawPet(){
         console.log(elements.canvasContext)
-        
         elements.canvasContext.drawImage(this.pet.image,this.petPosition.x, this.petPosition.y, this.petPosition.width, this.petPosition.height);
+    }
+
+    setLimits(){
+        this.limits.top = this.petPosition.y + 20;
+        this.limits.bottom = this.petPosition.y + this.petPosition.height - 20;
+        this.limits.right = this.petPosition.x + this.petPosition.width - 20;
+        this.limits.left = this.petPosition.x + 20;
     }
 }
 
@@ -183,7 +195,15 @@ function moveCharacter(){
     if(keysPressed.ArrowRight && player.petPosition.x < (elements.canvas.width - player.petPosition.width - 5)){
         player.petPosition.x += player.petPosition.speed;
     }
-    
+
+    enemies.forEach(enemy => {
+        console.log(checkCollision(enemy))
+        if (checkCollision(enemy)) {
+            selectedEnemy = enemy;
+            initiateBattlefield();
+        }
+    });
+
     updateCanvas();
 }
 
@@ -199,6 +219,28 @@ function drawPets(){
     
 }
 
+function checkCollision(enemy){
+    debugger
+    player.setLimits();
+    enemy.setLimits()
+    console.log('Player bottom ' + player.limits.bottom);
+    console.log('Player top ' + player.limits.top);
+    console.log('Player right ' + player.limits.right);
+    console.log('Player left ' + player.limits.left);
+    console.log('Enemy bottom ' + player.limits.bottom);
+    console.log('Enemy top ' + player.limits.top);
+    console.log('Enemy right ' + player.limits.right);
+    console.log('Enemy left ' + player.limits.left);
+    if (player.limits.bottom < enemy.limits.top ||
+        player.limits.top > enemy.limits.bottom ||
+        player.limits.right < enemy.limits.left ||
+        player.limits.left > enemy.limits.right ) {
+            return false;
+    }
+    alert(`Colission with ${enemy.pet.name}`);
+    return true;
+}
+
 // ------------------------------------//
 // ------------ BATTLEFIELD -----------//
 // ------------------------------------//
@@ -207,7 +249,6 @@ function drawPets(){
 function initiateBattlefield(){
     clearAttackResult();
     settleBattle();
-    //enableAttackButtons();
     round = 1;
 }
 
