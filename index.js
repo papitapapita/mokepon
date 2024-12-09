@@ -2,7 +2,10 @@ class GameCharacter{
     constructor(id, pet){
         this.id = id;
         this.pet = pet;
-        this.position = position;
+        this.position = {
+            x: 0,
+            y: 0
+        };
     }
 }
 
@@ -47,7 +50,7 @@ app.post("/mokepon/:playerId/position", (req, res) => {
     const playerId = req.params.playerId || "";
     const playerIndex = playersList.findIndex(player => player.id == playerId);
     if(playerIndex >= 0){
-        const position = {x: req.params.x, y: req.params.y} || {};
+        const position = {x: req.body.x, y: req.body.y} || {};
         playersList[playerIndex].position = position;
     }
     res.end();

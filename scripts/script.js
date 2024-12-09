@@ -221,7 +221,7 @@ function moveCharacter(){
         }
     });
     
-    updateServerPosition();
+    updateServerPosition(player.petPosition.x, player.petPosition.y);
     updateCanvas();
 }
 
@@ -235,6 +235,7 @@ async function updateServerPosition(x, y){
             x,y
         })
     });
+    console.log(response.status);
 }
 
 function updateCanvas(){
