@@ -1,26 +1,14 @@
-class GameCharacter {
-  constructor(id, pet) {
-    this.id = id;
-    this.pet = pet;
-    this.position = {
-      x: 0,
-      y: 0
-    };
-  }
-}
+import GameCharacter from './public/scripts/models/GameCharacter.js';
+import Mokepon from './model/Mokepon.js';
+import express from 'express';
+import cors from 'cors';
+import path from 'node:path';
 
-class Mokepon {
-  constructor(name) {
-    this.name = name;
-  }
-}
-
+const __dirname = import.meta.dirname;
+const app = express();
 const playersList = [];
 
-const express = require('express');
-const cors = require('cors');
-const app = express();
-
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(express.json());
 
